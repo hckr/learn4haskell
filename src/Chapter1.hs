@@ -550,9 +550,7 @@ mid x y z
   | z <= x && x <= y = x
   | x <= y && y <= z = y
   | z <= y && y <= x = y
-  | x <= z && z <= y = z
-  | y <= z && z <= x = z
-  | otherwise = error "I guess this never happens – how can I get rid of the warning?"
+  | otherwise = z
 
 {- |
 =⚔️= Task 8
@@ -641,9 +639,8 @@ specifying complex expressions.
 sumLast2 :: Integral a => a -> a
 sumLast2 n = x + y
   where
-    x = absN `mod` 10
-    y = (absN `mod` 100) `div` 10
-    absN = abs n
+    x = lastDigit n
+    y = (abs n `mod` 100) `div` 10
 
 
 {- |
@@ -665,10 +662,12 @@ aren't ready for this boss yet!
 -}
 
 firstDigit :: Integral t => t -> t
-firstDigit n
-  | n < 0 = firstDigit (-n)
-  | n < 10 = n
-  | otherwise = firstDigit (n `div` 10)
+firstDigit n =
+  impl (abs n)
+  where
+    impl nn
+      | nn < 10 = nn
+      | otherwise = impl (nn `div` 10)
 
 
 {-
