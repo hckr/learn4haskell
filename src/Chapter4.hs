@@ -668,7 +668,7 @@ Can you implement a monad version of AND, polymorphic over any monad?
 🕯 HINT: Use "(>>=)", "pure" and anonymous function
 -}
 andM :: (Monad m) => m Bool -> m Bool -> m Bool
-andM = error "andM: Not implemented!"
+andM m1 m2 = m1 >>= (\x -> if not x then pure x else m2 >>= pure)
 
 {- |
 =🐉= Task 9*: Final Dungeon Boss
